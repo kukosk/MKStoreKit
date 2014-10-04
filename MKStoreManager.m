@@ -172,6 +172,13 @@ static MKSKConfig*      _configuration;
   return [str dataUsingEncoding:NSUTF8StringEncoding];
 }
 
++(NSDictionary*) storeKitItems
+{
+    return [NSDictionary dictionaryWithContentsOfFile:
+            [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:
+             @"MKStoreKitConfigs.plist"]];
+}
+
 #pragma mark Singleton Methods
 
 + (void) setConfiguration:(MKSKConfig *)configuration {
@@ -213,13 +220,6 @@ static MKSKConfig*      _configuration;
 }
 
 #pragma mark Internal MKStoreKit functions
-
-+(NSDictionary*) storeKitItems
-{
-  return [NSDictionary dictionaryWithContentsOfFile:
-          [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:
-           @"MKStoreKitConfigs.plist"]];
-}
 
 - (void) restorePreviousTransactionsOnComplete:(void (^)(void)) completionBlock
                                        onError:(void (^)(NSError*)) errorBlock
