@@ -290,7 +290,7 @@ static MKSKConfig*      _configuration;
 - (BOOL) removeAllKeychainData {
   
   NSMutableArray *productsArray = [MKStoreManager allProducts];
-  int itemCount = productsArray.count;
+  NSUInteger itemCount = productsArray.count;
   NSError *error;
   
   //loop through all the saved keychain data and remove it
@@ -480,7 +480,7 @@ static MKSKConfig*      _configuration;
   if ([SKPaymentQueue canMakePayments])
 	{
     NSArray *allIds = [self.purchasableObjects valueForKey:@"productIdentifier"];
-    int index = [allIds indexOfObject:productId];
+    NSUInteger index = [allIds indexOfObject:productId];
     
     if(index == NSNotFound) return;
     
@@ -607,6 +607,12 @@ static MKSKConfig*      _configuration;
                hostedContent:[NSArray arrayWithObject:download]];
         
         [[SKPaymentQueue defaultQueue] finishTransaction:download.transaction];
+        break;
+      case SKDownloadStateActive:
+      case SKDownloadStateCancelled:
+      case SKDownloadStateFailed:
+      case SKDownloadStatePaused:
+      case SKDownloadStateWaiting:
         break;
     }
   }];
